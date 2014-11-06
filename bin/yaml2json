@@ -10,7 +10,7 @@ require 'yaml'
 
 trap('INT') { exit 130 }
 
-inputs = ARGV[1] ? ARGV[1..-1].map {|f| open f } : [STDIN]
+inputs = ARGV[0] ? ARGV.map {|f| open f } : [STDIN]
 inputs.each do |input|
   YAML.load_stream(input) do |d|
     puts JSON.dump(d)
