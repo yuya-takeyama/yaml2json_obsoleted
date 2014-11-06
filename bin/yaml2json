@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+# coding: utf-8
+
+lib = File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+require 'yaml2json/version'
+require 'json'
+require 'yaml'
+
+trap('INT') { exit 130 }
+
+inputs = ARGV[1] ? ARGV[1..-1].map {|f| open f } : [STDIN]
+inputs.each do |input|
+  YAML.load_stream(input) do |d|
+    puts JSON.dump(d)
+  end
+end
